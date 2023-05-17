@@ -8,7 +8,7 @@ Comandos para rodar:
 Se caso não rodar:
 - npm install (Para baixar todas as dependencias do package.json)
 - yarn dev
-
+ 
 
 ### Pré-requisitos: ###
 * Java 17 instalado
