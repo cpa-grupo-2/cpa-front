@@ -68,6 +68,12 @@ code {
   align-items: center;
   justify-content: space-evenly;
 }
+.centralizeddois{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
 
 .w-200 {
   width: 200px !important;
