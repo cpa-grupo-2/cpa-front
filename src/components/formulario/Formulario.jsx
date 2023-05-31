@@ -48,11 +48,12 @@ const Formulario = () => {
         validationSchema: schema,
         onSubmit: async values => {
             try {
-                cadastroService.cadastroMembroCpa(values.name, values.email, values.cpf, values.telefone)
-                values.name = ''
-                values.email = ''
-                values.cpf = ''
-                values.telefone = ''
+                cadastroService.cadastroMembroCpa(values.name, values.email, values.cpf, values.telefone).then(() => {
+                    values.name = ''
+                    values.email = ''
+                    values.cpf = ''
+                    values.telefone = ''
+                })
             } catch (error) {
                 console.log(error);
 
@@ -121,23 +122,6 @@ const Formulario = () => {
                             required
                         />
                     </div>
-                    {/* <div style={{ padding: '35px', margin: '8px' }}>
-                        <FormControl sx={{ width: '800px' }} fullWidth>
-                            <InputLabel id="demo-simple-select-label">Função</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                name={'funcao'}
-                                value={formik.values.funcao}
-                                label="Função"
-                                onChange={formik.handleChange}
-                            >
-                                <MenuItem value={"PROFESSOR"}>PROFESSOR</MenuItem>
-                                <MenuItem value={"ALUNO"}>ALUNO</MenuItem>
-                                <MenuItem value={"EXTERNO"}>EXTERNO</MenuItem>
-                                <MenuItem value={"FUNCIONARIO"}>FUNCIONÁRIO</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div> */}
                     <Button type={'submit'}
                         sx={{ width: '600px' }}
                         variant="contained"
