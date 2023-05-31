@@ -10,8 +10,8 @@ export default function Home() {
       <Image
           url={homeCPA}
           alt={'Home da CPA'}
-          width={window.screen.width < 600 ? '70px' : '1300px'}
-          height={window.screen.width < 600 ? '50px' : '690px'}
+          width={window.screen.width < 600 ? '70px' : '90%'}
+          height={window.screen.width < 600 ? '50px' : '100%'}
       />
     </>  
   );

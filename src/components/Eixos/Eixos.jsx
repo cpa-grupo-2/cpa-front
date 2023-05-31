@@ -29,7 +29,7 @@ const Eixos = () => {
             <div className='ibox-content centralized' style={{ width: '1000px', height: '100px', borderRadius: '40px', }}>
                 <div style={{ width: '1033px', display: 'grid', justifyItems: 'center' }}>
                     <h2 style={{ color: '#000000' }}>Eixos</h2>
-                    <div className='barra_de_pesquisa' style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                    <div className='barra_de_pesquisa' style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', marginBottom: '15px' }}>
                         <TextField
                             color='nightRide'
                             variant='outlined'

@@ -87,7 +87,7 @@ export default function Sidebar() {
                 <SidebarItem text="Cadastros" link={'/cadastros'}>
                   <PersonAddIcon />
                 </SidebarItem>
-                <SidebarItem text="Gráficos" link={'/graficos'}>
+                <SidebarItem text="Importações" link={'/importacoes'}>
                   <EqualizerIcon />
                 </SidebarItem>
                 <SidebarItem text="Relatórios" link={'/relatorios'} style={{ marginBottom: 'auto' }}>
