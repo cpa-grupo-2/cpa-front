@@ -1,13 +1,18 @@
 import React from 'react'
+import Image from 'components/Image';
+import homeCPA from '../assets/image/homeCPA.jpg'
 
 export default function Home() {
 
 
   return (
     <>
-      <span>
-        Home
-      </span>
+      <Image
+          url={homeCPA}
+          alt={'Home da CPA'}
+          width={window.screen.width < 600 ? '70px' : '1300px'}
+          height={window.screen.width < 600 ? '50px' : '690px'}
+      />
     </>  
   );
 }
