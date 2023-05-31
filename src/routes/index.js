@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 const Login = lazy(() => import('../pages/login.jsx'));
 const Home = lazy(() => import('../pages/home.jsx'));
 const Perguntas = lazy(() => import('../pages/perguntas.jsx'));
-const Respostas = lazy(() => import('../pages/respostas.jsx'));
+const Eixos = lazy(() => import('../pages/eixos.jsx'));
 const Graficos = lazy(() => import('../pages/graficos.jsx'));
 const Relatorios = lazy(() => import('../pages/relatorios.jsx'));
 const Avaliacoes = lazy(() => import('../pages/avaliacoes.jsx'));
@@ -21,23 +21,23 @@ export default function AppRoutes() {
   const PrivateRoute = () => {
     const auth = localStorage.getItem('token') ? true : false
     return (
-        auth ? (
-          <AuthLayout>
-            <Outlet/>
-          </AuthLayout>
-        ) : (
-          <Navigate to='/login'/>
-        )
+      auth ? (
+        <AuthLayout>
+          <Outlet />
+        </AuthLayout>
+      ) : (
+        <Navigate to='/login' />
+      )
     );
   };
-  
+
   const PublicRoute = () => {
     const auth = localStorage.getItem('token') ? true : false
     return (
       !auth ? (
-        <Outlet/>
+        <Outlet />
       ) : (
-        <Navigate to='/home' replace={true}/>
+        <Navigate to='/home' replace={true} />
       )
     );
   };
@@ -45,7 +45,7 @@ export default function AppRoutes() {
   return (
     <Router>
       <>
-        <ToastContainer 
+        <ToastContainer
           position="top-center"
           autoClose={5000}
           hideProgressBar={false}
@@ -58,19 +58,19 @@ export default function AppRoutes() {
         />
         <Suspense fallback={<div> Loading... </div>}>
           <Routes>
-            <Route path='*' element={<PageNotFound/>} />
-            <Route element={<PublicRoute/>}>
-              <Route path='/login' element={<Login/>} />
+            <Route path='*' element={<PageNotFound />} />
+            <Route element={<PublicRoute />}>
+              <Route path='/login' element={<Login />} />
             </Route>
-            <Route element={<PrivateRoute/>}>
-              <Route path='/home' element={<Home/>} />
-              <Route path='/perguntas' element={<Perguntas/>} />
-              <Route path='/importacoes' element={<Importar/>} />
-              <Route path='/respostas' element={<Respostas/>} />
-              <Route path='/graficos' element={<Graficos/>} />
-              <Route path='/relatorios' element={<Relatorios/>} />
-              <Route path='/avaliacoes' element={<Avaliacoes/>} />
-              <Route path='/cadastros' element={<Cadastro/>} />
+            <Route element={<PrivateRoute />}>
+              <Route path='/home' element={<Home />} />
+              <Route path='/perguntas' element={<Perguntas />} />
+              <Route path='/importacoes' element={<Importar />} />
+              <Route path='/eixos' element={<Eixos />} />
+              <Route path='/graficos' element={<Graficos />} />
+              <Route path='/relatorios' element={<Relatorios />} />
+              <Route path='/avaliacoes' element={<Avaliacoes />} />
+              <Route path='/cadastros' element={<Cadastro />} />
             </Route>
           </Routes>
         </Suspense>
