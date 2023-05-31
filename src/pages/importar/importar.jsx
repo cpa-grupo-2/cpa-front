@@ -16,19 +16,13 @@ export default function Importar() {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  // useEffect(() => {
-  //   if (rowData.length > 0 && columnsData.length > 0) {
-  //     setShowErro(true);
-  //   }
-  // }, [rowData, columnsData]);
-
   const handleTable = (res) => {
     let index = 0;
     let rowTempl = [];
     res.forEach((element) => {
       const msgsNotBlank = element.mensagem.trim();
       let mensagens = msgsNotBlank.split(';');
-      mensagens.pop();
+      if(mensagens.length > 1) mensagens.pop();
       mensagens.forEach((text) => {
         rowTempl.push( {
           'id': index,
@@ -44,26 +38,12 @@ export default function Importar() {
       { field: 'linha' },
       { field: 'mensagem', flex: 1 },
     ]);
+    console.log({rowTempl})
     setRowData(rowTempl);
     setShowErro(true);
     setOpenModal(true);
   };
 
-  // const handleClickOpenDialog = (res) => {
-  //   const rowTempl = res.map((element, index) => ({
-  //     id: index,
-  //     linha: element.linha,
-  //     mensagem: element.mensagem
-  //   }));
-
-  //   setColumnsData([
-  //     { field: 'id' },
-  //     { field: 'linha' },
-  //     { field: 'mensagem', flex: 1 },
-  //   ]);
-  //   setRowData(rowTempl);
-  //   setShowTabelaCSV(true);
-  // };
 
   return (
     <Box>

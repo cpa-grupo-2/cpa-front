@@ -1,5 +1,6 @@
 import api from './api.js';
 import { Component } from 'react';
+import messageService from '../services/MessageService.js'
 export class CadastroService extends Component {
     async cadastroMembroCpa(name, email, cpf, telefone) {
         const params = {
@@ -12,6 +13,7 @@ export class CadastroService extends Component {
         console.log({ params })
         return await api.post(`/api/membros-cpa`, params)
             .then((response) => {
+                messageService.successMessage('Membro CPA cadastrado com sucesso')
                 console.log({ response })
                 const data = {
                     'token': response.data.token,
@@ -21,6 +23,7 @@ export class CadastroService extends Component {
                 return data;
             })
             .catch((err) => {
+                messageService.errorMessage('Erro ao cadastrar membro cpa')
                 console.log("ops! ocorreu um erro" + err);
             });
     }
