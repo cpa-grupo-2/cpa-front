@@ -13,7 +13,7 @@ const Graficos = lazy(() => import('../pages/graficos.jsx'));
 const Relatorios = lazy(() => import('../pages/relatorios.jsx'));
 const Avaliacoes = lazy(() => import('../pages/avaliacoes.jsx'));
 const Cadastro = lazy(() => import('../pages/cadastro.jsx'));
-const Importar = lazy(() => import('../pages/importar.jsx'));
+const Importar = lazy(() => import('../pages/importar/importar.jsx'));
 const PageNotFound = lazy(() => import('../pages/errors/PageNotFound.jsx'));
 // const Componente = lazy(() => import('./pages/Auth/Login'))
 
