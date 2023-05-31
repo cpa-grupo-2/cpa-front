@@ -1,16 +1,16 @@
 export const palette = {
-  primary: {
-    main: '#FFFFFF',
-    light: '##f3f3f4',
-    dark: '#aba8a8',
-    constrastText: 'rgba(0, 0, 0, 0.87)',
-  },
-  secondary: {
-    main: '#153149',
-    light: '#1a4b75',
-    dark: '#0d2030',
-    constrastText: 'rgba(0, 0, 0, 0.87)',
-  },
+  // primary: {
+  //   main: '#FFFFFF',
+  //   light: '#f3f3f4',
+  //   dark: '#aba8a8',
+  //   constrastText: 'rgba(0, 0, 0, 0.87)',
+  // },
+  // secondary: {
+  //   main: '#153149',
+  //   light: '#1a4b75',
+  //   dark: '#0d2030',
+  //   constrastText: 'rgba(0, 0, 0, 0.87)',
+  // },
   oceanGreen: {
     main: '#449B81',
     dark: '#38826c',
