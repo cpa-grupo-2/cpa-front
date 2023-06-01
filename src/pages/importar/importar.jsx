@@ -7,7 +7,7 @@ import importService from 'services/ImportService';
 import CheckboxComplete from 'components/CheckboxComplete';
 import TabelaCSV from 'components/TabelaCSV';
 import UploadInput from 'components/UploadInput/UploadInput.jsx';
-import ModalCsvErros from './modalCSVErrros';
+import Modal from '../../components/modal.jsx';
 
 export default function Importar() {
   const [rowData, setRowData] = useState(['', '', '', '', '']);
@@ -47,9 +47,9 @@ export default function Importar() {
 
   return (
     <Box>
-      <ModalCsvErros isOpen={openModal} setOpen={setOpenModal} >
+      <Modal isOpen={openModal} setOpen={setOpenModal} title={'Erros ao Importar arquivo CSV'}>
         <TabelaCSV rows={rowData} columns={columnsData} />
-      </ModalCsvErros>  
+      </Modal>  
       <Box
         sx={{
           display: "flex",

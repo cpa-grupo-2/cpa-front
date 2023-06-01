@@ -2,27 +2,14 @@ import React from 'react'
 import './eixos.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
+import Modal from '../../components/modal.jsx';
 import AddIcon from '@mui/icons-material/Add';
+import { Box } from '@mui/material';
 
 
 
 const Eixos = () => {
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const [openModal, setOpenModal] = React.useState(false);
     return (
 
         <div className='box'>
@@ -40,44 +27,32 @@ const Eixos = () => {
                         />
 
                         <div style={{ padding: '11px' }}>
-                            <Button variant="outlined"
+                            <Button 
+                                variant="outlined"
+                                onClick={() => setOpenModal(true)}
                                 color='nightRide'
                                 sx={{ width: '5%' }} >
-                                <AddIcon onClick={handleClickOpen}> </AddIcon>
+                                <AddIcon/>
                             </Button>
-                            <div sx={{ width: '700px' }}>
-                                <Dialog open={open} onClose={handleClose}>
-                                    <DialogTitle>Cadastrar Eixo</DialogTitle>
-                                    <DialogContent>
-
-                                        <List>
-                                            <ListItem>
-                                                <TextField
-                                                    color='nightRide'
-                                                    sx={{ width: '100%' }}
-                                                    label='Eixo'
-                                                />
-                                            </ListItem>
-
-                                            <Divider />
-                                            <ListItem>
-                                                <TextField
-                                                    color='nightRide'
-                                                    sx={{ width: '100%' }}
-                                                    label="Descrição"
-                                                    multiline
-                                                    rows={15}
-                                                    defaultValue=""
-                                                />
-                                            </ListItem>
-                                        </List>
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button color='nightRide' onClick={handleClose}>Fechar</Button>
-                                        <Button color='nightRide' onClick={handleClose}>Salvar</Button>
-                                    </DialogActions>
-                                </Dialog>
-                            </div>
+                            <Modal isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Eixo'} isCadastro={true}>
+                                <Box
+                                    gap={'15px'}
+                                >
+                                    <TextField
+                                        color='nightRide'
+                                        sx={{ width: '100%' }}
+                                        label='Eixo'
+                                    />
+                                    <TextField
+                                        color='nightRide'
+                                        sx={{ width: '100%' }}
+                                        label="Descrição"
+                                        multiline
+                                        rows={15}
+                                        defaultValue=""
+                                    />
+                                </Box>
+                            </Modal>
                         </div>
 
                     </div>

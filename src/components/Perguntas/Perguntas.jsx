@@ -2,27 +2,14 @@ import React from 'react'
 import './perguntas.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
+import Modal from 'components/modal';
 import AddIcon from '@mui/icons-material/Add';
 
 
 
 const Perguntas = () => {
-    const [open, setOpen] = React.useState(false);
+    const [openModal, setOpenModal] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
     return (
 
         <div className='box'>
@@ -40,51 +27,33 @@ const Perguntas = () => {
                         />
 
                         <div style={{ padding: '11px' }}>
-                            <Button variant="outlined"
+                            <Button 
+                                onClick={() => setOpenModal(true)}
+                                variant="outlined"
                                 color='nightRide'
                                 sx={{ width: '5%' }} >
-                                <AddIcon onClick={handleClickOpen}> </AddIcon>
+                                <AddIcon/>
                             </Button>
-                            <Dialog open={open} onClose={handleClose}>
-                                <DialogTitle>Cadastrar Pergunta</DialogTitle>
-                                <DialogContent>
-
-                                    <List>
-                                        <ListItem>
-                                            <divider />
-                                        </ListItem>
-                                        <ListItem>
-                                            <TextField
-                                                color='nightRide'
-                                                sx={{ width: '50%' }}
-                                                label='Eixo'
-                                            />
-                                            <TextField
-                                                color='nightRide'
-                                                sx={{ width: '50%' }}
-                                                label='Tipo de Resposta'
-                                            />
-                                        </ListItem>
-
-                                        <Divider />
-                                        <ListItem>
-
-                                            <TextField
-                                                color='nightRide'
-                                                sx={{ width: '100%' }}
-                                                label="Descrição"
-                                                multiline
-                                                rows={15}
-                                                defaultValue=""
-                                            />
-                                        </ListItem>
-                                    </List>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button color='nightRide' onClick={handleClose}>Fechar</Button>
-                                    <Button color='nightRide' onClick={handleClose}>Salvar</Button>
-                                </DialogActions>
-                            </Dialog>
+                            <Modal isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Pergunta'} isCadastro={true}>
+                                <TextField
+                                    color='nightRide'
+                                    sx={{ width: '50%' }}
+                                    label='Eixo'
+                                />
+                                <TextField
+                                    color='nightRide'
+                                    sx={{ width: '50%' }}
+                                    label='Tipo de Resposta'
+                                />
+                                <TextField
+                                    color='nightRide'
+                                    sx={{ width: '100%' }}
+                                    label="Descrição"
+                                    multiline
+                                    rows={15}
+                                    defaultValue=""
+                                />
+                            </Modal>
                         </div>
 
                     </div>
@@ -95,9 +64,9 @@ const Perguntas = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th className='esqu'>Eixo</th>
-                                <th className='meio'>Descrição</th>
-                                <th className='dire'>Editar</th>
+                                <th>Eixo</th>
+                                <th>Descrição</th>
+                                <th>Editar</th>
                             </tr>
                         </thead>
                         <tbody>

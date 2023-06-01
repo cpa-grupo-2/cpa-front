@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Divider } from '@mui/material';
 
-export default function ModalCsvErros({isOpen, setOpen, children}) {
+export default function Modal({isOpen, setOpen, children, title, isCadastro }) {
   const handleClose = () => {
     setOpen(false);
   };
@@ -14,7 +14,7 @@ export default function ModalCsvErros({isOpen, setOpen, children}) {
   return (
     <>
       <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='md'>
-        <DialogTitle>Erros ao Importar arquivo CSV</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <Divider/>
         <DialogContent>
           {children}
@@ -22,6 +22,11 @@ export default function ModalCsvErros({isOpen, setOpen, children}) {
         <Divider/>
         <DialogActions>
           <Button onClick={handleClose}>Fechar</Button>
+          {isCadastro && (
+            <>
+              <Button onClick={handleClose}>Salvar</Button>
+            </>
+          )}
         </DialogActions>
       </Dialog>
     </>
