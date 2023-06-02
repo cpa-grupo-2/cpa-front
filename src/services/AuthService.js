@@ -31,7 +31,8 @@ export class AuthService extends Component {
       if(response.status === 200) return;
     })
     .catch((err) => {
-      if(err.response.status === 403){
+      console.log({err})
+      if(err){
         localStorage.removeItem('token')
         return window.location.reload();
       }
