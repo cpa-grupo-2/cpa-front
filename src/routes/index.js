@@ -5,7 +5,9 @@ import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
 //Routes
-const Login = lazy(() => import('../pages/login.jsx'));
+const Login = lazy(() => import('../pages/login/login.jsx'));
+const RedefinirSenha = lazy(() => import('../pages/login/recuperacao_senha.jsx'));
+const ResetarSenha = lazy(() => import('../pages/login/resetar_senha.jsx'));
 const Home = lazy(() => import('../pages/home.jsx'));
 const Perguntas = lazy(() => import('../pages/perguntas.jsx'));
 const Eixos = lazy(() => import('../pages/eixos.jsx'));
@@ -61,6 +63,8 @@ export default function AppRoutes() {
             <Route path='*' element={<PageNotFound />} />
             <Route element={<PublicRoute />}>
               <Route path='/login' element={<Login />} />
+              <Route path='/redefinir-senha' element={<RedefinirSenha />} />
+              <Route path='/resetar-senha' element={<ResetarSenha />} />
             </Route>
             <Route element={<PrivateRoute />}>
               <Route path='/home' element={<Home />} />
