@@ -1,9 +1,9 @@
-export default function Perguntas() {
-  return(
-    <>
-      <span>
-        Perguntas
-      </span>
-    </>
+import Perguntas from "../components/Perguntas/Perguntas"
+
+export default function perguntas() {
+  return (
+    <Perguntas />
+
+
   )
 }

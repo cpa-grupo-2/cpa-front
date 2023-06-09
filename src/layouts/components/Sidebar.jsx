@@ -15,7 +15,7 @@ import Image from '../../components/Image.jsx'
 import authService from 'services/AuthService';
 import { useUserContext } from 'contexts/UserContext';
 
-const Container = styled('div')(({theme}) => ({
+const Container = styled('div')(({ theme }) => ({
   backgroundColor: '#13212D',
   position: 'fixed',
   height: '100vh',
@@ -25,7 +25,7 @@ const Container = styled('div')(({theme}) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  [theme.breakpoints.down("sm")]:{
+  [theme.breakpoints.down("sm")]: {
     width: '80px',
   },
 }));
@@ -36,8 +36,8 @@ const Content = styled('div')(() => ({
   flexDirection: 'column',
 }));
 
-const ResponsiveText = styled('span')(({theme}) => ({
-  [theme.breakpoints.down("sm")]:{
+const ResponsiveText = styled('span')(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
     display: 'none'
   },
 }));
@@ -45,10 +45,10 @@ const ResponsiveText = styled('span')(({theme}) => ({
 export default function Sidebar() {
   const { role } = useUserContext();
   validarToken();
-  
-  async function validarToken(){
+
+  async function validarToken() {
     let flag = true;
-    if(role && flag){
+    if (role && flag) {
       flag = false;
       await authService.authToken();
     }
@@ -62,7 +62,7 @@ export default function Sidebar() {
           alt={'Logo da CPA'}
           width={window.screen.width < 600 ? '70px' : '230px'}
           height={window.screen.width < 600 ? '50px' : '100px'}
-          style={{ 
+          style={{
             borderRadius: '1.50rem',
             marginTop: '20px',
             alignSelf: 'center',
@@ -70,40 +70,40 @@ export default function Sidebar() {
         />
         <Content>
           <SidebarItem text="Home" link={'/home'} >
-            <HomeIcon/>
+            <HomeIcon />
           </SidebarItem>
           <SidebarItem text="Avaliações" link={'/avaliacoes'}>
-            <ImportContactsIcon/>
+            <ImportContactsIcon />
           </SidebarItem>
           {
-            role === 'ROLE_CPA' &&  (
+            role === 'ROLE_CPA' && (
               <>
                 <SidebarItem text="Perguntas" link={'/perguntas'}>
-                  <SmsIcon/>
+                  <SmsIcon />
                 </SidebarItem>
-                <SidebarItem text="Respostas" link={'/respostas'}>
-                  <DoneIcon/>
+                <SidebarItem text="Eixos" link={'/eixos'}>
+                  <DoneIcon />
                 </SidebarItem>
-                <SidebarItem  text="Cadastros" link={'/cadastros'}>
-                  <PersonAddIcon/>
+                <SidebarItem text="Cadastros" link={'/cadastros'}>
+                  <PersonAddIcon />
                 </SidebarItem>
-                <SidebarItem text="Gráficos" link={'/graficos'}>
-                  <EqualizerIcon/>
+                <SidebarItem text="Importações" link={'/importacoes'}>
+                  <EqualizerIcon />
                 </SidebarItem>
-                <SidebarItem text="Relatórios" link={'/relatorios'} style={{marginBottom: 'auto'}}>
-                  <ClassIcon/>
+                <SidebarItem text="Relatórios" link={'/relatorios'} style={{ marginBottom: 'auto' }}>
+                  <ClassIcon />
                 </SidebarItem>
               </>
             )
           }
         </Content>
       </div>
-      <Button 
+      <Button
         variant="outlined"
-        startIcon={<LogoutIcon/>}
+        startIcon={<LogoutIcon />}
         onClick={(e) => authService.logout()}
         color='error'
-        sx={{ alignSelf: 'center', marginBottom: '5%'}}
+        sx={{ alignSelf: 'center', marginBottom: '5%' }}
       >
         <ResponsiveText>
           Logout

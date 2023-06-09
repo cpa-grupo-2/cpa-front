@@ -48,8 +48,12 @@ const Formulario = () => {
         validationSchema: schema,
         onSubmit: async values => {
             try {
-                cadastroService.cadastroMembroCpa(values.name, values.email, values.cpf, values.telefone)
-
+                cadastroService.cadastroMembroCpa(values.name, values.email, values.cpf, values.telefone).then(() => {
+                    values.name = ''
+                    values.email = ''
+                    values.cpf = ''
+                    values.telefone = ''
+                })
             } catch (error) {
                 console.log(error);
 
@@ -64,9 +68,9 @@ const Formulario = () => {
     return (
         <div className='box'>
             <form onSubmit={formik.handleSubmit} className='formulario-padrao'>
-                <div className='ibox-content centralized' style={{width: '1000px', height: '500px', borderRadius: '40px',}}>
-                    <div className='divider-title' style={{ width: '1033px',}}>
-                        <h2 style={{ color: '#000000'}}> Cadastrar Membro CPA</h2>
+                <div className='ibox-content centralized' style={{ width: '1000px', height: '500px', borderRadius: '40px', }}>
+                    <div className='divider-title' style={{ width: '1033px', }}>
+                        <h2 style={{ color: '#000000' }}> Cadastrar Membro CPA</h2>
                     </div>
                     <div>
                         <TextField sx={{ width: '800px' }}
@@ -76,7 +80,7 @@ const Formulario = () => {
                             value={formik.values.name}
                             onChange={formik.handleChange}
                             variant="outlined"
-                            type='text' 
+                            type='text'
                             required
                         />
                     </div>
@@ -112,29 +116,12 @@ const Formulario = () => {
                         <TextField sx={{ width: '45%' }}
                             name={'telefone'}
                             color='nightRide'
-                            valeu={formik.values.telefone}
+                            value={formik.values.telefone}
                             onChange={formik.handleChange}
-                            label="TELEFONE" variant="outlined" type='tel' 
+                            label="TELEFONE" variant="outlined" type='tel'
                             required
                         />
                     </div>
-                    {/* <div style={{ padding: '35px', margin: '8px' }}>
-                        <FormControl sx={{ width: '800px' }} fullWidth>
-                            <InputLabel id="demo-simple-select-label">Função</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                name={'funcao'}
-                                value={formik.values.funcao}
-                                label="Função"
-                                onChange={formik.handleChange}
-                            >
-                                <MenuItem value={"PROFESSOR"}>PROFESSOR</MenuItem>
-                                <MenuItem value={"ALUNO"}>ALUNO</MenuItem>
-                                <MenuItem value={"EXTERNO"}>EXTERNO</MenuItem>
-                                <MenuItem value={"FUNCIONARIO"}>FUNCIONÁRIO</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div> */}
                     <Button type={'submit'}
                         sx={{ width: '600px' }}
                         variant="contained"

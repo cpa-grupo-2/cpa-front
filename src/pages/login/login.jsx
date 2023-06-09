@@ -8,13 +8,13 @@ import {
   useTheme,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import '../assets/css/login.css'
+import '../../assets/css/login.css'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import logoCpa from '../assets/image/logoCpa.jpg';
-import Image from '../components/Image.jsx';
+import logoCpa from '../../assets/image/logoCpa.jpg';
+import Image from '../../components/Image.jsx';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import authService from 'services/AuthService.js';
+import authService from '../../services/AuthService.js';
 
 export default function Login() {
   const theme = useTheme();
@@ -59,7 +59,7 @@ export default function Login() {
 
   return (
       <Box
-        className='container-center'
+        className='container-center shadow'
         width={'380px'}
         height={'480px'}
         sx={{ 'backgroundColor': theme.palette.elephant.main }}
@@ -147,7 +147,7 @@ export default function Login() {
             />
           </div>
           <Link
-            href='#'
+            href='/redefinir-senha'
             color={theme.palette.azureRadiance.main}
             fontSize={'0.8rem'}
             marginRight={'30%'}

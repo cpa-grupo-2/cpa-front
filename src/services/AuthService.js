@@ -31,7 +31,8 @@ export class AuthService extends Component {
       if(response.status === 200) return;
     })
     .catch((err) => {
-      if(err.response.status === 403){
+      console.log({err})
+      if(err){
         localStorage.removeItem('token')
         return window.location.reload();
       }
@@ -52,6 +53,38 @@ export class AuthService extends Component {
     })
     .catch((err) => {
       console.error("ops! ocorreu um erro no logout" + err);
+    })
+  }
+
+  async sendEmail(email){
+    const params = {
+      email: email,
+    }
+    await api.post(`/api/auth/public/email`, params)
+    .then((response) => {
+      if (response.data){
+        messageService.successMessage('A senha temporária foi enviada no email informado!')
+      }
+    })
+    .catch((err) => {
+      console.log({err})
+      messageService.errorMessage('Email informado não encontrado!')
+    })
+  }
+
+  async resetPassword(token, senha){
+    const params = {
+      password: senha,
+    }
+    await api.patch(`/api/auth/public/resetPassword?token=${token}`, params)
+    .then((response) => {
+      if (response.data){
+        messageService.successMessage('Sua senha foi alterada com sucesso!')
+      }
+    })
+    .catch((err) => {
+      console.log({err})
+      messageService.errorMessage('Aconteceu um erro ao tentar salvar!')
     })
   }
 }
