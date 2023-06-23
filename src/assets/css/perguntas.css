@@ -1,0 +1,19 @@
+.divider-title{
+    border-color: #dee6eb;
+    border-style: none none solid none;
+    border-width: 1px;
+}
+.divider{
+    border-color: #dee6eb;
+    border-style: none none solid none;
+    border-width: 1px;
+}
+
+.box{
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
