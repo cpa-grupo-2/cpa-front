@@ -17,27 +17,29 @@ export default function Perguntas() {
   const [openModal, setOpenModal] = React.useState(false);
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 80 },
+    {
+      field: 'id',
+      headerName: 'ID',
+    },
     {
       field: 'firstName',
       headerName: 'Eixo',
-      width: 200,
       editable: true,
     },
     {
       field: 'lastName',
       headerName: 'Descrcição',
-      width: 550,
+      flex: 1,
       editable: true,
     },
     {
       field: 'actions',
       headerName: 'Actions',
-      width: 100,
+      flex: 1,
       renderCell: (params) => (
         <div>
-          <button onClick={() => handleEdit(params.row.id)} ><EditIcon /></button>
-          <button onClick={() => handleDelete(params.row.id)}><DeleteIcon /></button>
+          <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
+          <Button onClick={() => handleDelete(params.row.id)}><DeleteIcon /></Button>
         </div >
       ),
     },
@@ -147,21 +149,23 @@ export default function Perguntas() {
             />
           </Modal>
         </div>
-        <DataGrid sx={{ borderRadius: '40px' }}
-          slots={{ toolbar: GridToolbar }}
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 9,
+        <div style={{ height: 500, width: 800 }}>
+          <DataGrid sx={{ borderRadius: '40px' }}
+            slots={{ toolbar: GridToolbar }}
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 9,
+                },
               },
-            },
-          }}
-          pageSizeOptions={[9]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
+            }}
+            pageSizeOptions={[9]}
+            checkboxSelection
+            disableRowSelectionOnClick
+          />
+        </div>
       </div>
     </Box >
 
