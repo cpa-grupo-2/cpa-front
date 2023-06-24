@@ -14,6 +14,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 
 
 export default function Perguntas() {
+
   const [openModal, setOpenModal] = React.useState(false);
 
   const columns = [
@@ -35,7 +36,9 @@ export default function Perguntas() {
     {
       field: 'actions',
       headerName: 'Actions',
-      flex: 1,
+      minWidth: 150,
+      display: 'flex',
+      justifyContent: 'flex-end',
       renderCell: (params) => (
         <div>
           <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
@@ -44,6 +47,8 @@ export default function Perguntas() {
       ),
     },
   ];
+
+
 
   const rowsCopia = [
     { label: 'teste1', age: 42 },
@@ -73,6 +78,8 @@ export default function Perguntas() {
   ];
 
   const handleEdit = (id) => {
+    setOpenModal(true)
+
     // Lógica para editar o registro com o ID fornecido
     console.log(`Editar registro com ID ${id}`);
   };
@@ -86,7 +93,7 @@ export default function Perguntas() {
   return (
 
 
-    < Box className='ibox-content centralized' sx={{ width: '1000px', height: '700px', borderRadius: '40px', }
+    < Box className='ibox-content centralized' sx={{ width: '1250px', height: '800px', borderRadius: '40px' }
     }>
       <div style={{ width: '1033px', display: 'grid', justifyItems: 'stretch', justifyContent: 'space-around', alignContent: 'space-around' }}>
         <div style={{}}>
@@ -149,7 +156,7 @@ export default function Perguntas() {
             />
           </Modal>
         </div>
-        <div style={{ height: 500, width: 800 }}>
+        <div style={{ height: 650, width: 1100 }}>
           <DataGrid sx={{ borderRadius: '40px' }}
             slots={{ toolbar: GridToolbar }}
             rows={rows}
