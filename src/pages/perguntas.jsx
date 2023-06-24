@@ -11,9 +11,17 @@ import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 export default function Perguntas() {
+  const [open, setOpen] = React.useState(false);
+
+
 
   const [openModal, setOpenModal] = React.useState(false);
 
@@ -42,7 +50,9 @@ export default function Perguntas() {
       renderCell: (params) => (
         <div>
           <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
-          <Button onClick={() => handleDelete(params.row.id)}><DeleteIcon /></Button>
+          {/* <Button onClick={() => { handleClickOpen(true), handleDelete(params.row.id) }}><DeleteIcon /></Button> */}
+          <Button onClick={() => { handleClickOpen(); handleDelete(params.row.id); }}><DeleteIcon /></Button>
+
         </div >
       ),
     },
@@ -84,7 +94,21 @@ export default function Perguntas() {
     console.log(`Editar registro com ID ${id}`);
   };
 
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   const handleDelete = (id) => {
+
+
+
+
     // Lógica para excluir o registro com o ID fornecido
     console.log(`Excluir registro com ID ${id}`);
   };
@@ -155,6 +179,31 @@ export default function Perguntas() {
               defaultValue=""
             />
           </Modal>
+        </div>
+        <div>
+          < Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Deseja excluir?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Esta ação não poderá ser desfeita, tem certeza que deseja excluir?
+
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}> Não </Button>
+              <Button onClick={handleClose} autoFocus>
+                Sim
+              </Button>
+            </DialogActions>
+          </Dialog >
+
         </div>
         <div style={{ height: 650, width: 1100 }}>
           <DataGrid sx={{ borderRadius: '40px' }}
