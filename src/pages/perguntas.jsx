@@ -17,11 +17,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
 export default function Perguntas() {
   const [open, setOpen] = React.useState(false);
-
-
 
   const [openModal, setOpenModal] = React.useState(false);
 
@@ -29,36 +26,38 @@ export default function Perguntas() {
     {
       field: 'id',
       headerName: 'ID',
+      headerAlign: 'center',
     },
     {
       field: 'firstName',
       headerName: 'Eixo',
+      headerAlign: 'center',
+      flex: 0.5,
       editable: true,
     },
     {
       field: 'lastName',
       headerName: 'Descrcição',
+      headerAlign: 'center',
       flex: 1,
       editable: true,
     },
     {
-      field: 'actions',
-      headerName: 'Actions',
+      // field: 'actions',
+      // headerName: 'Actions',
+      headerAlign: 'center',
       minWidth: 150,
       display: 'flex',
       justifyContent: 'flex-end',
       renderCell: (params) => (
         <div>
           <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
-          {/* <Button onClick={() => { handleClickOpen(true), handleDelete(params.row.id) }}><DeleteIcon /></Button> */}
           <Button onClick={() => { handleClickOpen(); handleDelete(params.row.id); }}><DeleteIcon /></Button>
 
         </div >
       ),
     },
   ];
-
-
 
   const rowsCopia = [
     { label: 'teste1', age: 42 },
@@ -107,15 +106,11 @@ export default function Perguntas() {
   const handleDelete = (id) => {
 
 
-
-
     // Lógica para excluir o registro com o ID fornecido
     console.log(`Excluir registro com ID ${id}`);
   };
 
-
   return (
-
 
     < Box className='ibox-content centralized' sx={{ width: '1250px', height: '800px', borderRadius: '40px' }
     }>
@@ -203,7 +198,6 @@ export default function Perguntas() {
               </Button>
             </DialogActions>
           </Dialog >
-
         </div>
         <div style={{ height: 650, width: 1100 }}>
           <DataGrid sx={{ borderRadius: '40px' }}
