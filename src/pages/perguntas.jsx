@@ -16,6 +16,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { FormControl, InputLabel } from '@mui/material';
 
 export default function Perguntas() {
   const [open, setOpen] = React.useState(false);
@@ -26,29 +27,30 @@ export default function Perguntas() {
     {
       field: 'id',
       headerName: 'ID',
-      headerAlign: 'center',
+      // headerAlign: 'center',
     },
     {
       field: 'firstName',
       headerName: 'Eixo',
-      headerAlign: 'center',
+      // headerAlign: 'center',
       flex: 0.5,
       editable: true,
     },
     {
       field: 'lastName',
-      headerName: 'Descrcição',
-      headerAlign: 'center',
+      headerName: 'Descrição',
+      // headerAlign: 'center',
       flex: 1,
       editable: true,
     },
     {
-      // field: 'actions',
-      // headerName: 'Actions',
+      field: 'actions',
+      headerName: 'Ações',
+      type: 'actions',
       headerAlign: 'center',
       minWidth: 150,
       display: 'flex',
-      justifyContent: 'flex-end',
+      // justifyContent: 'flex-end',
       renderCell: (params) => (
         <div>
           <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
@@ -112,62 +114,68 @@ export default function Perguntas() {
 
   return (
 
-    < Box className='ibox-content centralized' sx={{ width: '1250px', height: '800px', borderRadius: '40px' }
-    }>
-      <div style={{ width: '1033px', display: 'grid', justifyItems: 'stretch', justifyContent: 'space-around', alignContent: 'space-around' }}>
-        <div style={{}}>
-          <h2 style={{ color: '#000000' }}>Perguntas
-          </h2>
-          <Button
-            align='right'
-            onClick={() => setOpenModal(true)}
-            variant="outlined"
-            color='nightRide'
-            sx={{ width: '50%' }} >
-            <AddIcon />
-            Nova pergunta
-          </Button>
-        </div>
+    <Box className='ibox-content centralized br-40' sx={{ width: '80%', height: '80%' }}>
+      <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignItems: 'center' }}>
+        <h2 style={{ color: '#000000' }}>Perguntas
+        </h2>
+        <Button
+          align='right'
+          onClick={() => setOpenModal(true)}
+          variant="outlined"
+          color='nightRide' >
+          <AddIcon />
+          Nova pergunta
+        </Button>
         <div style={{ padding: '11px' }}>
 
-          <Modal isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Pergunta'} isCadastro={true}>
+          <Modal isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Pergunta'} isCadastro={true} sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '8px',
+            justifyContent: 'center',
+          }}>
 
             {/* <TextField
                   color='nightRide'
                   sx={{ width: '50%' }}
                   label='Eixo'
                 /> */}
-            <Select
+            <FormControl sx={{width: '35%'}}>
+              <InputLabel id="demo-simple-select-label"> Tipo </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                color='nightRide'
+                // sx={{ color: "#000000" }}
+                id="tdp select"
+                // value={age}
+                label="Tipo"
+              // onChange={handleChange}
+              >
+                <MenuItem value={1}>Descritiva</MenuItem>
+                <MenuItem value={2}>Objetiva</MenuItem>
+                <MenuItem value={3}>Lickert</MenuItem>
+              </Select>
+            </FormControl>
 
-              color='nightRide'
-              sx={{ width: '50%', color: "#000000" }}
-              id="tdp select"
-              // value={age}
-              label="Tipo de Resposta"
-            // onChange={handleChange}
-            >
-              <MenuItem value={10}>Descritiva</MenuItem>
-              <MenuItem value={20}>Objetiva</MenuItem>
-              <MenuItem value={30}>Lickert</MenuItem>
-            </Select>
-
-            <Select
-
-              color='nightRide'
-              sx={{ width: '50%', color: "#000000" }}
-              id="tdp select"
-              // value={age}
-              label="Tipo de Resposta"
-            // onChange={handleChange}
-            >
-              <MenuItem value={10}>Descritiva</MenuItem>
-              <MenuItem value={20}>Objetiva</MenuItem>
-              <MenuItem value={30}>Lickert</MenuItem>
-            </Select>
-            <Divider />
+            <FormControl sx={{width: '35%'}}>
+              <InputLabel id="demo-simple-select-label"> Eixo </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                color='nightRide'
+                sx={{ color: "#000000" }}
+                id="tdp select"
+                // value={age}
+                label="Eixo"
+              // onChange={handleChange}
+              >
+                <MenuItem value={1}>Professor</MenuItem>
+                <MenuItem value={2}>Instituição</MenuItem>
+                <MenuItem value={3}>Coordenação</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               color='nightRide'
-              sx={{ width: '100%' }}
+              sx={{ width: '70%' }}
               label="Descrição"
               multiline
               rows={15}
@@ -199,8 +207,8 @@ export default function Perguntas() {
             </DialogActions>
           </Dialog >
         </div>
-        <div style={{ height: 650, width: 1100 }}>
-          <DataGrid sx={{ borderRadius: '40px' }}
+        <div style={{ height: '80%', width: '90%'}}>
+          <DataGrid sx={{ borderRadius: '25px' }}
             slots={{ toolbar: GridToolbar }}
             rows={rows}
             columns={columns}

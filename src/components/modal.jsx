@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Divider } from '@mui/material';
 
-export default function Modal({isOpen, setOpen, children, title, isCadastro }) {
+export default function Modal({isOpen, setOpen, children, title, isCadastro, ...props }) {
   const handleClose = () => {
     setOpen(false);
   };
@@ -16,7 +16,7 @@ export default function Modal({isOpen, setOpen, children, title, isCadastro }) {
       <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='md'>
         <DialogTitle>{title}</DialogTitle>
         <Divider/>
-        <DialogContent>
+        <DialogContent {...props} >
           {children}
         </DialogContent>
         <Divider/>
