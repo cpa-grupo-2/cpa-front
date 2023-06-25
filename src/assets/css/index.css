@@ -120,6 +120,10 @@ code {
   border-radius: 20px !important;
 }
 
+.br-40 {
+  border-radius: 40px !important;
+}
+
 .no-line{
   text-decoration: none;
   margin: 8px 0px 8px 0px
