@@ -6,25 +6,30 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Divider } from '@mui/material';
 
-export default function Modal({isOpen, setOpen, children, title, isCadastro }) {
+
+export default function Modal({ isOpen, setOpen, children, title, isCadastro, onSubmit }) {
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleSave = () => {
+    onSubmit();
+    handleClose();
   };
 
   return (
     <>
       <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth='md'>
         <DialogTitle>{title}</DialogTitle>
-        <Divider/>
+        <Divider />
         <DialogContent>
           {children}
         </DialogContent>
-        <Divider/>
+        <Divider />
         <DialogActions>
           <Button onClick={handleClose}>Fechar</Button>
           {isCadastro && (
             <>
-              <Button onClick={handleClose}>Salvar</Button>
+              <Button onClick={handleSave}>Salvar</Button>
             </>
           )}
         </DialogActions>
