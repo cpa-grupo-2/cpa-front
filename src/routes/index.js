@@ -16,6 +16,7 @@ const Relatorios = lazy(() => import('../pages/relatorios.jsx'));
 const Avaliacoes = lazy(() => import('../pages/avaliacoes.jsx'));
 const Cadastro = lazy(() => import('../pages/cadastro.jsx'));
 const Importar = lazy(() => import('../pages/importar/importar.jsx'));
+const AssociacaoProfessorDisciplina = lazy(() => import('../pages/associacao_professor_disciplina.jsx'));
 const PageNotFound = lazy(() => import('../pages/errors/PageNotFound.jsx'));
 // const Componente = lazy(() => import('./pages/Auth/Login'))
 
@@ -70,6 +71,7 @@ export default function AppRoutes() {
               <Route path='/home' element={<Home />} />
               <Route path='/perguntas' element={<Perguntas />} />
               <Route path='/importacoes' element={<Importar />} />
+              <Route path='/associacao_professor_disciplina' element={<AssociacaoProfessorDisciplina />} />
               <Route path='/eixos' element={<Eixos />} />
               <Route path='/graficos' element={<Graficos />} />
               <Route path='/relatorios' element={<Relatorios />} />
