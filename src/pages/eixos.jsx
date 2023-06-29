@@ -13,9 +13,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import EixosService from 'services/EixosService'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import eixosService from 'services/EixosService';
 
 
 
@@ -24,13 +24,14 @@ export default function Eixos() {
 
   const [eixos, setEixos] = React.useState([]);
 
+  const [idExcluir, setIdExcluir] = React.useState(null);
+
   useEffect(() => {
-    async function fetchEixos() {
+    const fetchEixos = async () => {
       try {
-        const eixosData = await EixosService.listarEixos();
-        setEixos(eixosData);
-      } catch (error) {
-        console.error('Erro ao buscar os eixos:', error);
+        const data = await eixosService.listarEixos();
+        setEixos(data.eixos);
+      } catch (erro) {
       }
     }
 
@@ -46,6 +47,7 @@ export default function Eixos() {
 
   const formik = useFormik({
     initialValues: {
+      id: '',
       nomeEixo: '',
       descricao: ''
     },
@@ -53,36 +55,34 @@ export default function Eixos() {
     validationSchema: schema,
     onSubmit: async values => {
       try {
-        EixosService.cadastroEixo(values.nomeEixo, values.descricao).then(() => {
-          values.nomeEixo = ''
-          values.descricao = ''
-        })
+        if (values.id !== '' && values.id !== undefined)
+          eixosService.editarEixos(values.id, values.nomeEixo, values.descricao).then(() => {
+            values.id = ''
+            values.nomeEixo = ''
+            values.descricao = ''
+          })
+        else
+          eixosService.cadastroEixo(values.nomeEixo, values.descricao).then(() => {
+            values.nomeEixo = ''
+            values.descricao = ''
+          })
       } catch (error) {
         console.log(error);
-
       }
     },
   });
 
   const columns = [
     {
-      field: 'id',
-      headerName: 'ID',
-      // headerAlign: 'center',
-    },
-    {
-      field: 'eixo',
+      field: 'nomeEixo',
       headerName: 'Eixo',
-      // headerAlign: 'center',
+      type: 'string',
       flex: 0.5,
-      editable: true,
     },
     {
       field: 'descricao',
       headerName: 'Descrição',
-      // headerAlign: 'center',
       flex: 1,
-      editable: true,
     },
     {
       field: 'actions',
@@ -91,46 +91,53 @@ export default function Eixos() {
       headerAlign: 'center',
       minWidth: 150,
       display: 'flex',
-      // justifyContent: 'flex-end',
-      renderCell: (params) => (
+      getActions: (params) => [
         <div>
-          <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
-          <Button onClick={() => { handleClickOpen(); handleDelete(params.row.id); }}><DeleteIcon /></Button>
+          <Button onClick={() => handleEdit(params.row)} ><EditIcon /></Button>
+          <Button onClick={() => { handleClickOpen(params.id) }}><DeleteIcon /></Button>
 
         </div >
-      ),
+      ],
     },
   ];
 
-  const rows = eixos.map(eixo => ({
-    id: eixo.id,
-    eixo: eixo.nomeEixo,
-    descricao: eixo.descricao
-  }));
+  const rows = () => {
+    return eixos.map(eixo => ({
+      id: eixo.id,
+      eixo: eixo.nomeEixo,
+      descricao: eixo.descricao
+    }));
+  }
 
-  const handleEdit = (id) => {
+  const handleEdit = (params) => {
+    formik.setValues({
+      id: params.id,
+      nomeEixo: params.nomeEixo,
+      descricao: params.descricao,
+    });
+
     setOpenModal(true)
-
-
-    console.log(`Editar registro com ID ${id}`);
   };
 
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setIdExcluir(id);
   };
 
   const handleClose = () => {
     setOpen(false);
+
   };
 
 
-  const handleDelete = (id) => {
-
-
-
-    console.log(`Excluir registro com ID ${id}`);
-  };
+  const handleDelete = async (id) => {
+    if (idExcluir !== null) {
+      await eixosService.excluirEixo(idExcluir).then((response) => {
+        setOpen(false)
+      });
+    }
+  }
 
   return (
 
@@ -196,16 +203,16 @@ export default function Eixos() {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}> Não </Button>
-              <Button onClick={handleClose} autoFocus>
+              <Button onClick={() => handleDelete()} autoFocus>
                 Sim
               </Button>
             </DialogActions>
           </Dialog >
         </div>
-        <div style={{ height: '80%', width: '90%' }}>
+        <div style={{ height: '85%', width: '100%' }}>
           <DataGrid sx={{ borderRadius: '25px' }}
             slots={{ toolbar: GridToolbar }}
-            rows={eixos}
+            rows={eixos ? eixos : []}
             columns={columns}
             initialState={{
               pagination: {
@@ -215,8 +222,7 @@ export default function Eixos() {
               },
             }}
             pageSizeOptions={[9]}
-            checkboxSelection
-            disableRowSelectionOnClick
+
           />
         </div>
       </div>

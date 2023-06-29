@@ -28,13 +28,67 @@ export class EixosService extends Component {
 
 
     async listarEixos() {
-        try {
-            const response = await api.get('api/eixo/eixos')
-            return response.data;
-        } catch (err) {
-            messageService.errorMessage('Não há eixos cadastrados')
-            console.log("Ops! ocorreu um erro" + err);
+        return await api.get('api/eixo')
+            .then((response) => {
+                console.log({ response })
+                const data = {
+                    eixos: response.data
+                }
+                return data;
+
+            })
+            .catch((err) => {
+                messageService.errorMessage('Não há eixos cadastrados')
+                console.log("Ops! ocorreu um erro" + err);
+            });
+    }
+
+    async editarEixos(id, nomeEixo, descricao) {
+        const params = {
+            id: id,
+            nomeEixo: nomeEixo,
+            descricao: descricao
         }
+        console.log({ params })
+        return await api.put(`/api/eixo`, params)
+            .then((response) => {
+                messageService.successMessage('Eixo editado com sucesso')
+                console.log({ response })
+                const data = {
+                    'token': response.data.token,
+                    'role': response.data.level,
+                }
+                console.log({ data })
+                return data;
+            })
+            .catch((err) => {
+                messageService.errorMessage('Erro ao editar Eixo')
+                console.log("Ops! ocorreu um erro" + err);
+            });
+    }
+
+    async excluirEixo(id) {
+        const params = {
+            id: id
+        }
+
+        console.log({ params })
+        console.log({ id })
+        return await api.delete(`/api/eixo/${id}`)
+            .then((response) => {
+                messageService.successMessage('Eixo excluído com sucesso')
+                console.log({ response })
+                const data = {
+                    'token': response.data.token,
+                    'role': response.data.level,
+                }
+                console.log({ data })
+                return data;
+            })
+            .catch((err) => {
+                messageService.errorMessage('Erro ao excluir Eixo')
+                console.log("Ops! ocorreu um erro" + err);
+            });
     }
 
 }
