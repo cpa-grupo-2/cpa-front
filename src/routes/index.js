@@ -61,12 +61,13 @@ export default function AppRoutes() {
         />
         <Suspense fallback={<div> Loading... </div>}>
           <Routes>
-            <Route path='*' element={<PageNotFound />} />
             <Route element={<PublicRoute />}>
               <Route path='/login' element={<Login />} />
               <Route path='/redefinir-senha' element={<RedefinirSenha />} />
               <Route path='/resetar-senha' element={<ResetarSenha />} />
+              <Route path='*' element={<Login />} />
             </Route>
+            <Route path='*' element={<PageNotFound />} />
             <Route element={<PrivateRoute />}>
               <Route path='/home' element={<Home />} />
               <Route path='/perguntas' element={<Perguntas />} />
