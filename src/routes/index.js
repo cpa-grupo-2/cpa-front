@@ -3,6 +3,7 @@ import AuthLayout from 'layouts/AuthLayout.jsx';
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
+import { LinearProgress } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.min.css';
 //Routes
 const Login = lazy(() => import('../pages/login/login.jsx'));
@@ -58,7 +59,7 @@ export default function AppRoutes() {
           draggable
           pauseOnHover
         />
-        <Suspense fallback={<div> Loading... </div>}>
+        <Suspense fallback={<LinearProgress />}>
           <Routes>
             <Route path='*' element={<PageNotFound />} />
             <Route element={<PublicRoute />}>
