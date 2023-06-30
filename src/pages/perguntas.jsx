@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import '../assets/css/perguntas.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -9,7 +9,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -20,38 +19,58 @@ import { FormControl, InputLabel } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import perguntasService from 'services/PerguntasService';
-// import eixosService from 'services/EixosService';
+import eixosService from 'services/EixosService';
 
 export default function Perguntas() {
   const [open, setOpen] = React.useState(false);
-
   const [openModal, setOpenModal] = React.useState(false);
+  const [eixos, setEixos] = React.useState([]);
+  const [idExcluir, setIdExcluir] = React.useState([]);
+
+  useEffect(() => {
+    const fetchEixos = async () => {
+      try {
+        const data = await eixosService.listarEixos();
+        setEixos(data.eixos);
+      } catch (erro) {
+      }
+    }
+
+    fetchEixos();
+  }, []);
 
   const schema = Yup.object().shape({
+    id: Yup.string().required('Erro ao encontrar identificador'),
     pergunta: Yup.string().required('Perguntas é obrigatório'),
-    descricao: Yup.string().required('Descrição é obrigatório')
+    descricao: Yup.string().required('Descrição é obrigatório'),
+    eixoId: Yup.string().required('Selecione pelo menos um eixo'),
   });
 
   const formik = useFormik({
     initialValues: {
       id: '',
       pergunta: '',
-      descricao: ''
+      descricao: '',
+      eixoId: '',
     },
 
     validationSchema: schema,
     onSubmit: async values => {
       try {
+        console.log('AAAAAAAa')
+        console.log({ values })
         if (values.id !== '' && values.id !== undefined)
           perguntasService.editarPergunta(values.id, values.nomeEixo, values.descricao).then(() => {
             values.id = ''
             values.pergunta = ''
             values.descricao = ''
+            values.eixoId = ''
           })
         else
           perguntasService.cadastroPergunta(values.nomeEixo, values.descricao).then(() => {
-            values.nomeEixo = ''
+            values.pergunta = ''
             values.descricao = ''
+            values.eixoId = ''
           })
       } catch (error) {
         console.log(error);
@@ -79,33 +98,34 @@ export default function Perguntas() {
       headerAlign: 'center',
       minWidth: 150,
       display: 'flex',
-      // justifyContent: 'flex-end',
       renderCell: (params) => (
         <div>
           <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
-          <Button onClick={() => { handleClickOpen(); handleDelete(params.row.id); }}><DeleteIcon /></Button>
+          <Button onClick={() => { handleDelete(params.row.id) }}><DeleteIcon /></Button>
 
         </div >
       ),
     },
   ];
 
-  const eixos = () => {
-
-  }
 
   const rows = [];
 
-  const handleEdit = (id) => {
-    setOpenModal(true)
+  const handleEdit = (params) => {
+    formik.setValues({
+      id: params.id,
+      pergunta: params.pergunta,
+      descricao: params.descricao,
+      eixoId: params.eixoId,
+    });
 
-    // Lógica para editar o registro com o ID fornecido
-    console.log(`Editar registro com ID ${id}`);
+    setOpenModal(true)
   };
 
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setIdExcluir(id);
   };
 
   const handleClose = () => {
@@ -113,12 +133,13 @@ export default function Perguntas() {
   };
 
 
-  const handleDelete = (id) => {
-
-
-    // Lógica para excluir o registro com o ID fornecido
-    console.log(`Excluir registro com ID ${id}`);
-  };
+  const handleDelete = async (id) => {
+    if (idExcluir !== null) {
+      await perguntasService.excluirPergunta(idExcluir).then((response) => {
+        setOpen(false)
+      });
+    }
+  }
 
   return (
 
@@ -136,7 +157,7 @@ export default function Perguntas() {
         </Button>
         <div style={{ padding: '11px' }}>
 
-          <Modal isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Pergunta'} isCadastro={true} sx={{
+          <Modal onSubmit={formik.handleSubmit} isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Perguntas'} isCadastro={true} sx={{
             display: 'flex',
             flexWrap: 'wrap',
             gap: '8px',
@@ -153,15 +174,14 @@ export default function Perguntas() {
               <Select
                 labelId="demo-simple-select-label"
                 color='nightRide'
-                // sx={{ color: "#000000" }}
                 id="tdp select"
-                // value={age}
                 label="Tipo"
-              // onChange={handleChange}
+                name={'tipo'}
+                value={formik.values.tipo}
+                onChange={formik.handleChange}
               >
                 <MenuItem value={1}>Descritiva</MenuItem>
-                <MenuItem value={2}>Objetiva</MenuItem>
-                <MenuItem value={3}>Lickert</MenuItem>
+                <MenuItem value={2}>Lickert</MenuItem>
               </Select>
             </FormControl>
 
@@ -172,13 +192,16 @@ export default function Perguntas() {
                 color='nightRide'
                 sx={{ color: "#000000" }}
                 id="select"
-                //value={age}
                 label="Eixo"
-              // onChange={handleChange}
+                name="eixoId"
+                value={formik.values.eixoId}
+                onChange={formik.handleChange}
               >
-                <MenuItem value={1}>Professor</MenuItem>
-                <MenuItem value={2}>Instituição</MenuItem>
-                <MenuItem value={3}>Coordenação</MenuItem>
+                {
+                  eixos.map((eixo, index) => (
+                    (<MenuItem value={eixo.id}>{eixo.nomeEixo}</MenuItem>)
+                  ))
+                }
               </Select>
             </FormControl>
             <TextField
@@ -187,7 +210,9 @@ export default function Perguntas() {
               label="Descrição"
               multiline
               rows={15}
-              defaultValue=""
+              name={'descricao'}
+              value={formik.values.descricao}
+              onChange={formik.handleChange}
             />
           </Modal>
         </div>
