@@ -21,22 +21,29 @@ import eixosService from 'services/EixosService';
 
 export default function Eixos() {
   const [open, setOpen] = React.useState(false);
-
   const [eixos, setEixos] = React.useState([]);
-
   const [idExcluir, setIdExcluir] = React.useState(null);
+  const [isAlterado, setIsAlterado] = React.useState(false);
 
   useEffect(() => {
     const fetchEixos = async () => {
       try {
         const data = await eixosService.listarEixos();
-        setEixos(data.eixos);
+
+        data.map(eixo => ({
+          id: eixo.id,
+          eixo: eixo.nomeEixo,
+          descricao: eixo.descricao
+        }));
+
+        setEixos(data);
       } catch (erro) {
+        console.error(erro)
       }
     }
 
     fetchEixos();
-  }, []);
+  }, [isAlterado]);
 
   const [openModal, setOpenModal] = React.useState(false);
 
@@ -60,11 +67,13 @@ export default function Eixos() {
             values.id = ''
             values.nomeEixo = ''
             values.descricao = ''
+            setIsAlterado(!isAlterado);
           })
         else
           eixosService.cadastroEixo(values.nomeEixo, values.descricao).then(() => {
             values.nomeEixo = ''
             values.descricao = ''
+            setIsAlterado(!isAlterado);
           })
       } catch (error) {
         console.log(error);
@@ -101,14 +110,6 @@ export default function Eixos() {
     },
   ];
 
-  const rows = () => {
-    return eixos.map(eixo => ({
-      id: eixo.id,
-      eixo: eixo.nomeEixo,
-      descricao: eixo.descricao
-    }));
-  }
-
   const handleEdit = (params) => {
     formik.setValues({
       id: params.id,
@@ -134,7 +135,9 @@ export default function Eixos() {
   const handleDelete = async (id) => {
     if (idExcluir !== null) {
       await eixosService.excluirEixo(idExcluir).then((response) => {
-        setOpen(false)
+        setOpen(false);
+        setIsAlterado(!isAlterado);
+
       });
     }
   }
@@ -164,7 +167,7 @@ export default function Eixos() {
             <TextField
               name={'nomeEixo'}
               color='nightRide'
-              sx={{ width: '35%' }}
+              sx={{ width: '70%' }}
               label="Eixo"
               defaultValue=""
               value={formik.values.nomeEixo}

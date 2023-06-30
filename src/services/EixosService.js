@@ -25,10 +25,7 @@ export class EixosService extends Component {
         return await api.get('api/eixo')
             .then((response) => {
                 console.log({ response })
-                const data = {
-                    eixos: response.data
-                }
-                return data;
+                return response.data;
 
             })
             .catch((err) => {

@@ -35,6 +35,7 @@ export default function Questoes() {
         const data = await eixosService.listarEixos();
         setEixos(data.eixos);
       } catch (erro) {
+        console.error(erro)
       }
     }
 
