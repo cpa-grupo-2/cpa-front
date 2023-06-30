@@ -19,11 +19,8 @@ export class ImportService extends Component {
       console.log({err});
       console.log(err.response.data)
       let dataError = err.response.data; 
-      if(((err.response.status === 409) || (err.response.status === 400)) && (err.response.data.erros.length > 0)){
-        messageService.errorMessage('Erro ao cadastrar as instituições');
-        return dataError;
-      }
-      console.log("ops! ocorreu um erro" + err);
+      messageService.errorMessage('Erro ao cadastrar as instituições');
+      return dataError;
     });
   }
 
@@ -46,12 +43,9 @@ export class ImportService extends Component {
       console.log({err});
       console.log(err.response.data)
       let dataError = err.response.data; 
-      if(((err.response.status === 409) || (err.response.status === 400)) && (err.response.data.erros.length > 0)){
-        messageService.errorMessage('Erro ao cadastrar os Cursos');
-        console.log({dataError})
-        return dataError;
-      }
-      console.log("ops! ocorreu um erro" + err);
+      messageService.errorMessage('Erro ao cadastrar os Cursos');
+      console.log({dataError})
+      return dataError;
     });
   }
 
@@ -74,12 +68,9 @@ export class ImportService extends Component {
       console.log({err});
       console.log(err.response.data)
       let dataError = err.response.data; 
-      if(((err.response.status === 409) || (err.response.status === 400)) && (err.response.data.erros.length > 0)){
-        messageService.errorMessage('Erro ao cadastrar as Turmas');
-        console.log({dataError})
-        return dataError;
-      }
-      console.log("ops! ocorreu um erro" + err);
+      messageService.errorMessage('Erro ao cadastrar as Turmas');
+      console.log({dataError})
+      return dataError;
     });
   }
 
@@ -102,12 +93,9 @@ export class ImportService extends Component {
       console.log({err});
       console.log(err.response.data)
       let dataError = err.response.data; 
-      if(((err.response.status === 409) || (err.response.status === 400)) && (err.response.data.erros.length > 0)){
-        messageService.errorMessage('Erro ao cadastrar os Professores');
-        console.log({dataError})
-        return dataError;
-      }
-      console.log("ops! ocorreu um erro" + err);
+      messageService.errorMessage('Erro ao cadastrar os Professores');
+      console.log({dataError})
+      return dataError;
     });
   }
 
@@ -128,12 +116,9 @@ export class ImportService extends Component {
       console.log({err});
       console.log(err.response.data)
       let dataError = err.response.data; 
-      if(((err.response.status === 409) || (err.response.status === 400)) && (err.response.data.erros.length > 0)){
-        messageService.errorMessage('Erro ao cadastrar os alunos');
-        console.log({dataError})
-        return dataError;
-      }
-      console.log("ops! ocorreu um erro" + err);
+      messageService.errorMessage('Erro ao cadastrar os alunos');
+      console.log({dataError})
+      return dataError;
     });
   }
 
@@ -154,12 +139,9 @@ export class ImportService extends Component {
       console.log({err});
       console.log(err.response.data)
       let dataError = err.response.data; 
-      if(((err.response.status === 409) || (err.response.status === 400)) && (err.response.data.erros.length > 0)){
-        messageService.errorMessage('Erro ao cadastrar os Funcionarios');
-        console.log({dataError})
-        return dataError;
-      }
-      console.log("ops! ocorreu um erro" + err);
+      messageService.errorMessage('Erro ao cadastrar os Funcionarios');
+      console.log({dataError})
+      return dataError;
     });
   }
 }

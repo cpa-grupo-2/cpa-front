@@ -10,7 +10,7 @@ import UploadInput from 'components/UploadInput/UploadInput.jsx';
 import Modal from '../../components/modal.jsx';
 
 export default function Importar() {
-  const [rowData, setRowData] = useState(['', '', '', '', '']);
+  const [rowData, setRowData] = useState();
   const [columnsData, setColumnsData] = useState([]);
   const [showErro, setShowErro] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ export default function Importar() {
       let mensagens = msgsNotBlank.split(';');
       if(mensagens.length > 1) mensagens.pop();
       mensagens.forEach((text) => {
-        rowTempl.push( {
+        rowTempl.push({
           'id': index,
           'linha': element.linha,
           'mensagem': text
