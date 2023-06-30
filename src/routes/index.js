@@ -3,13 +3,14 @@ import AuthLayout from 'layouts/AuthLayout.jsx';
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
+import { LinearProgress } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.min.css';
 //Routes
 const Login = lazy(() => import('../pages/login/login.jsx'));
 const RedefinirSenha = lazy(() => import('../pages/login/recuperacao_senha.jsx'));
 const ResetarSenha = lazy(() => import('../pages/login/resetar_senha.jsx'));
 const Home = lazy(() => import('../pages/home.jsx'));
-const Perguntas = lazy(() => import('../pages/perguntas.jsx'));
+const Questoes = lazy(() => import('../pages/questoes.jsx'));
 const Eixos = lazy(() => import('../pages/eixos.jsx'));
 const Graficos = lazy(() => import('../pages/graficos.jsx'));
 const Relatorios = lazy(() => import('../pages/relatorios.jsx'));
@@ -59,7 +60,7 @@ export default function AppRoutes() {
           draggable
           pauseOnHover
         />
-        <Suspense fallback={<div> Loading... </div>}>
+        <Suspense fallback={<LinearProgress />}>
           <Routes>
             <Route element={<PublicRoute />}>
               <Route path='/login' element={<Login />} />
@@ -70,7 +71,7 @@ export default function AppRoutes() {
             <Route path='*' element={<PageNotFound />} />
             <Route element={<PrivateRoute />}>
               <Route path='/home' element={<Home />} />
-              <Route path='/perguntas' element={<Perguntas />} />
+              <Route path='/questoes' element={<Questoes />} />
               <Route path='/importacoes' element={<Importar />} />
               <Route path='/associacao_professor_disciplina' element={<AssociacaoProfessorDisciplina />} />
               <Route path='/eixos' element={<Eixos />} />

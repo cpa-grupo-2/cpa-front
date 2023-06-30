@@ -78,7 +78,7 @@ export default function Sidebar() {
           {
             role === 'ROLE_CPA' && (
               <>
-                <SidebarItem text="Perguntas" link={'/perguntas'}>
+                <SidebarItem text="Questões" link={'/questoes'}>
                   <SmsIcon />
                 </SidebarItem>
                 <SidebarItem text="Eixos" link={'/eixos'}>

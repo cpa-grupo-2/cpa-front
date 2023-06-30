@@ -127,7 +127,6 @@ code {
 .br-10 {
   border-radius: 10px !important;
 }
-
 .p-5 {
   padding: 5px !important;
 }
@@ -148,9 +147,10 @@ code {
 
 .p-30 {
   padding: 30px !important;
+.br-40 {
+  border-radius: 40px !important;
 }
-
 .no-line{
   text-decoration: none;
-  margin: 8px 0px 8px 0px
+  margin: 8px 0px 8px 0px;
 }
