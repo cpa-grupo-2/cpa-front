@@ -65,6 +65,7 @@ export default function RecuperacaoSenha() {
         <Typography variant='h6'> Recuperação de Senha </Typography>
         <form className='form-body'>
           <TextField
+            id='email_recuperacao_senha'
             className='mt-10 mb-20'
             fullWidth
             required
@@ -110,6 +111,7 @@ export default function RecuperacaoSenha() {
               Voltar
             </Button>
             <Button
+              id='enviar_recuperacao_senha'
               className='w-200 mt-20 br-20'
               sx={{fontWeight: '600'}}
               variant='contained'

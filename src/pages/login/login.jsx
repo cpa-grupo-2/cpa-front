@@ -82,6 +82,8 @@ export default function Login() {
           <div style={{ 'width': '235px' }}>
             <TextField
               fullWidth
+              id='user_email'
+              name='user_email'
               className='mt-10'
               error={erroEmail}
               onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +93,7 @@ export default function Login() {
               InputProps={{
                 color: 'primary',
                 border: '1px solid white',
-                borderColor: 'primary',
+                bordercolor: 'primary'
               }}
               sx={{ 
                 '& label.Mui-focused': {
@@ -110,6 +112,8 @@ export default function Login() {
             />
             <TextField
               className='mt-10 mb-20'
+              id='user_password'
+              name='user_password'
               fullWidth
               error={erroPassword}
               onChange={(e) => setPassword(e.target.value)}
@@ -147,6 +151,7 @@ export default function Login() {
             />
           </div>
           <Link
+            id='esqueci_minha_senha'
             href='/redefinir-senha'
             color={theme.palette.azureRadiance.main}
             fontSize={'0.8rem'}
@@ -156,6 +161,8 @@ export default function Login() {
             Esqueceu sua senha?
           </Link>
           <Button
+            id='efetuar_login'
+            name='efetuar_login'
             className='w-200 mt-20 br-20'
             sx={{fontWeight: '600'}}
             variant='contained'

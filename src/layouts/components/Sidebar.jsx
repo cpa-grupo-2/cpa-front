@@ -84,10 +84,10 @@ export default function Sidebar() {
                 <SidebarItem text="Eixos" link={'/eixos'}>
                   <DoneIcon />
                 </SidebarItem>
-                <SidebarItem text="Cadastros" link={'/cadastros'}>
+                <SidebarItem text="Cadastros" link={'/cadastros'} id={'sidebar_cadastro'}>
                   <PersonAddIcon />
                 </SidebarItem>
-                <SidebarItem text="Importações" link={'/importacoes'}>
+                <SidebarItem text="Importações" link={'/importacoes'} id={'sidebar_importacoes'}>
                   <EqualizerIcon />
                 </SidebarItem>
                 <SidebarItem text="Relatórios" link={'/relatorios'} style={{ marginBottom: 'auto' }}>
@@ -99,6 +99,7 @@ export default function Sidebar() {
         </Content>
       </div>
       <Button
+        id='logout'
         variant="outlined"
         startIcon={<LogoutIcon />}
         onClick={(e) => authService.logout()}

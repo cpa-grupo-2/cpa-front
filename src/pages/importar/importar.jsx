@@ -144,24 +144,25 @@ export default function Importar() {
               <Form style={{ textAlign: 'center' }}>
                 <Box display="flex" marginBottom="1.25rem" justifyContent="center">
                   <UploadInput
+                    id='uploadFile'
                     name="file"
                     onBlur={handleBlur}
                     onChange={(file) => setFieldValue('file', file)}
                   />
                   <Box marginLeft="1.25rem" textAlign="start">
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
-                      <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
+                      <InputLabel id="select-tipo-importacao-label">Tipo</InputLabel>
                       <Select
-                        labelId="demo-simple-select-label"
+                        labelId="select-tipo-importacao-label"
                         label="Tipo"
-                        id="demo-simple-select"
+                        id="select-tipo-importacao"
                         value={values.tipo}
                         name="tipo"
                         onBlur={handleBlur}
                         onChange={handleChange}
                       >
                         <MenuItem value="CURSOS">Cursos</MenuItem>
-                        <MenuItem value="INSTITUICOES">Instituições</MenuItem>
+                        <MenuItem id='instituicoes'value="INSTITUICOES">Instituições</MenuItem>
                         <MenuItem value="TURMAS">Turmas</MenuItem>
                         <MenuItem value="PROFESSORES">Professores</MenuItem>
                         <MenuItem value="ALUNOS">Alunos</MenuItem>
