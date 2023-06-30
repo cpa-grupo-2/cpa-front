@@ -53,9 +53,6 @@ export default function RecuperacaoSenha() {
     <Box
       width={'1200px'}
       height={'500px'}
-      // backgroundColor={'#000000'}
-      // className='container-center'
-      // gap={'15px'}
       display={'flex'}
       flexDirection={'column'}
       justifyContent={'center'}
