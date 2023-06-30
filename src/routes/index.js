@@ -73,7 +73,7 @@ export default function AppRoutes() {
               <Route path='/home' element={<Home />} />
               <Route path='/questoes' element={<Questoes />} />
               <Route path='/importacoes' element={<Importar />} />
-              <Route path='/associacao_professor_disciplina' element={<AssociacaoProfessorDisciplina />} />
+              <Route path='/associacao_turmas' element={<AssociacaoProfessorDisciplina />} />
               <Route path='/eixos' element={<Eixos />} />
               <Route path='/graficos' element={<Graficos />} />
               <Route path='/relatorios' element={<Relatorios />} />

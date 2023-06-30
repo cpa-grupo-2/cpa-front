@@ -29,16 +29,16 @@ export default function Eixos() {
     const fetchEixos = async () => {
       try {
         const data = await eixosService.listarEixos();
+        if (data)
+          data.map(eixo => ({
+            id: eixo.id,
+            eixo: eixo.nomeEixo,
+            descricao: eixo.descricao
+          }));
 
-        data.map(eixo => ({
-          id: eixo.id,
-          eixo: eixo.nomeEixo,
-          descricao: eixo.descricao
-        }));
-
-        setEixos(data);
+        setEixos(data ? data : []);
       } catch (erro) {
-        console.error(erro)
+        console.log(erro)
       }
     }
 
@@ -91,6 +91,7 @@ export default function Eixos() {
     {
       field: 'descricao',
       headerName: 'Descrição',
+      type: 'string',
       flex: 1,
     },
     {

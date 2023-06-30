@@ -28,7 +28,6 @@ export class QuestoesService extends Component {
                 return response.data;
             })
             .catch((err) => {
-                messageService.errorMessage('Não há nenhuma questão cadastrada')
                 console.log("Ops! ocorreu um erro" + err);
             });
     }

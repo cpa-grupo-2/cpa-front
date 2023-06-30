@@ -26,10 +26,8 @@ export class EixosService extends Component {
             .then((response) => {
                 console.log({ response })
                 return response.data;
-
             })
             .catch((err) => {
-                messageService.errorMessage('Não há eixos cadastrados')
                 console.log("Ops! ocorreu um erro" + err);
             });
     }

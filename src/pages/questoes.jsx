@@ -33,7 +33,14 @@ export default function Questoes() {
     const fetchEixos = async () => {
       try {
         const data = await eixosService.listarEixos();
-        setEixos(data.eixos);
+        if (data)
+          data.map(eixo => ({
+            id: eixo.id,
+            eixo: eixo.nomeEixo,
+            descricao: eixo.descricao
+          }));
+
+        setEixos(data ? data : []);
       } catch (erro) {
         console.error(erro)
       }
@@ -42,14 +49,14 @@ export default function Questoes() {
     const fetchQuestoes = async () => {
       try {
         const data = await questoeService.listarQuestoes();
-
-        data.map((questao) => ({
-          id: questao.id,
-          tipo: questao.tipo,
-          descricao: questao.descricao,
-          eixo: questao.eixo,
-        }));
-        setQuestoes(data);
+        if(data)
+          data.map((questao) => ({
+            id: questao.id,
+            tipo: questao.tipo,
+            descricao: questao.descricao,
+            eixo: questao.eixo,
+          }));
+        setQuestoes(data ? data : []);
       } catch (erro) {
         console.log('Erro')
       }
@@ -123,8 +130,8 @@ export default function Questoes() {
     },
     {
       field: 'actions',
-      headerName: 'Ações',
       type: 'actions',
+      headerName: 'Ações',
       headerAlign: 'center',
       minWidth: 150,
       display: 'flex',
@@ -213,7 +220,7 @@ export default function Questoes() {
                 onChange={formik.handleChange}
               >
                 {
-                  eixos.map((eixo, index) => (
+                  eixos && eixos.map((eixo, index) => (
                     (<MenuItem value={eixo.id}>{eixo.nomeEixo}</MenuItem>)
                   ))
                 }
@@ -258,7 +265,7 @@ export default function Questoes() {
         <div style={{ height: '80%', width: '100%' }}>
           <DataGrid sx={{ borderRadius: '25px' }}
             slots={{ toolbar: GridToolbar }}
-            rows={questoes}
+            rows={questoes ? questoes : []}
             columns={columns}
             initialState={{
               pagination: {

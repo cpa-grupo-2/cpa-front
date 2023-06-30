@@ -4,7 +4,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import SmsIcon from '@mui/icons-material/Sms';
 import DoneIcon from '@mui/icons-material/Done';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 import ClassIcon from '@mui/icons-material/Class';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import { styled } from '@mui/material/styles';
@@ -88,9 +88,9 @@ export default function Sidebar() {
                   <PersonAddIcon />
                 </SidebarItem>
                 <SidebarItem text="Importações" link={'/importacoes'}>
-                  <EqualizerIcon />
+                  <DriveFileMoveIcon />
                 </SidebarItem>
-                <SidebarItem text="Relatórios" link={'/relatorios'} style={{ marginBottom: 'auto' }}>
+                <SidebarItem text="Associação Turma" link={'/associacao_turmas'} style={{ marginBottom: 'auto' }}>
                   <ClassIcon />
                 </SidebarItem>
               </>
