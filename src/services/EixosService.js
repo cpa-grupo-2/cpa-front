@@ -12,13 +12,7 @@ export class EixosService extends Component {
         return await api.post(`/api/eixo`, params)
             .then((response) => {
                 messageService.successMessage('Eixo cadastrado com sucesso')
-                console.log({ response })
-                const data = {
-                    'token': response.data.token,
-                    'role': response.data.level,
-                }
-                console.log({ data })
-                return data;
+                return response.data;
             })
             .catch((err) => {
                 messageService.errorMessage('Erro ao cadastrar Eixo')
@@ -53,13 +47,7 @@ export class EixosService extends Component {
         return await api.put(`/api/eixo`, params)
             .then((response) => {
                 messageService.successMessage('Eixo editado com sucesso')
-                console.log({ response })
-                const data = {
-                    'token': response.data.token,
-                    'role': response.data.level,
-                }
-                console.log({ data })
-                return data;
+                return response.data;
             })
             .catch((err) => {
                 messageService.errorMessage('Erro ao editar Eixo')
@@ -77,13 +65,7 @@ export class EixosService extends Component {
         return await api.delete(`/api/eixo/${id}`)
             .then((response) => {
                 messageService.successMessage('Eixo excluído com sucesso')
-                console.log({ response })
-                const data = {
-                    'token': response.data.token,
-                    'role': response.data.level,
-                }
-                console.log({ data })
-                return data;
+                return response.data;
             })
             .catch((err) => {
                 messageService.errorMessage('Erro ao excluir Eixo')
