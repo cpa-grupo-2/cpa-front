@@ -18,14 +18,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FormControl, InputLabel } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import perguntasService from 'services/PerguntasService';
+import questoeService from 'services/QuestoesService';
 import eixosService from 'services/EixosService';
 
-export default function Perguntas() {
+export default function Questoes() {
   const [open, setOpen] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
   const [eixos, setEixos] = React.useState([]);
+  const [questoes, setQuestoes] = React.useState([]);
   const [idExcluir, setIdExcluir] = React.useState([]);
+  const [isAlterado, setIsAlterado] = React.useState(false);
 
   useEffect(() => {
     const fetchEixos = async () => {
@@ -36,12 +38,28 @@ export default function Perguntas() {
       }
     }
 
+    const fetchQuestoes = async () => {
+      try {
+        const data = await questoeService.listarQuestoes();
+
+        data.map((questao) => ({
+          id: questao.id,
+          tipo: questao.tipo,
+          descricao: questao.descricao,
+          eixo: questao.eixo,
+        }));
+        setQuestoes(data);
+      } catch (erro) {
+        console.log('Erro')
+      }
+    }
+
     fetchEixos();
-  }, []);
+    fetchQuestoes();
+  }, [isAlterado]);
 
   const schema = Yup.object().shape({
-    id: Yup.string().required('Erro ao encontrar identificador'),
-    pergunta: Yup.string().required('Perguntas é obrigatório'),
+    tipo: Yup.string().required('É necessário informar o tipo da questão'),
     descricao: Yup.string().required('Descrição é obrigatório'),
     eixoId: Yup.string().required('Selecione pelo menos um eixo'),
   });
@@ -49,7 +67,7 @@ export default function Perguntas() {
   const formik = useFormik({
     initialValues: {
       id: '',
-      pergunta: '',
+      tipo: '',
       descricao: '',
       eixoId: '',
     },
@@ -57,20 +75,20 @@ export default function Perguntas() {
     validationSchema: schema,
     onSubmit: async values => {
       try {
-        console.log('AAAAAAAa')
-        console.log({ values })
         if (values.id !== '' && values.id !== undefined)
-          perguntasService.editarPergunta(values.id, values.nomeEixo, values.descricao).then(() => {
+          await questoeService.editarQuestaos(values.id, values.tipo, values.descricao, values.eixoId).then(() => {
             values.id = ''
-            values.pergunta = ''
+            values.tipo = ''
             values.descricao = ''
             values.eixoId = ''
+            setIsAlterado(!isAlterado);
           })
         else
-          perguntasService.cadastroPergunta(values.nomeEixo, values.descricao).then(() => {
-            values.pergunta = ''
+          await questoeService.cadastrarQuestao(values.tipo, values.descricao, values.eixoId).then(() => {
+            values.tipo = ''
             values.descricao = ''
             values.eixoId = ''
+            setIsAlterado(!isAlterado);
           })
       } catch (error) {
         console.log(error);
@@ -78,16 +96,27 @@ export default function Perguntas() {
     },
   });
 
+  const handleClickOpen = (id) => {
+    setOpen(true);
+    setIdExcluir(id);
+  };
+
   const columns = [
     {
-      field: 'perguntas',
-      headerName: 'Perguntas',
+      field: 'descricao',
+      headerName: 'Questão',
       type: 'string',
-      flex: 0.5,
+      flex: 1,
     },
     {
-      field: 'descricao',
-      headerName: 'Descrição',
+      field: 'tipo',
+      headerName: 'Questão',
+      type: 'string',
+      flex: 1,
+    },
+    {
+      field: 'eixo',
+      headerName: 'Eixo',
       type: 'string',
       flex: 1,
     },
@@ -100,32 +129,24 @@ export default function Perguntas() {
       display: 'flex',
       renderCell: (params) => (
         <div>
-          <Button onClick={() => handleEdit(params.row.id)} ><EditIcon /></Button>
-          <Button onClick={() => { handleDelete(params.row.id) }}><DeleteIcon /></Button>
+          <Button onClick={() => handleEdit(params.row)} ><EditIcon /></Button>
+          <Button onClick={() => { handleClickOpen(params.row.id) }}><DeleteIcon /></Button>
 
         </div >
       ),
     },
   ];
 
-
-  const rows = [];
-
-  const handleEdit = (params) => {
+  const handleEdit = async (params) => {
     formik.setValues({
       id: params.id,
-      pergunta: params.pergunta,
+      tipo: params.tipo,
       descricao: params.descricao,
+      eixo: params.eixo,
       eixoId: params.eixoId,
     });
 
     setOpenModal(true)
-  };
-
-
-  const handleClickOpen = (id) => {
-    setOpen(true);
-    setIdExcluir(id);
   };
 
   const handleClose = () => {
@@ -133,19 +154,18 @@ export default function Perguntas() {
   };
 
 
-  const handleDelete = async (id) => {
-    if (idExcluir !== null) {
-      await perguntasService.excluirPergunta(idExcluir).then((response) => {
-        setOpen(false)
-      });
-    }
+  const handleDelete = async () => {
+    await questoeService.excluirQuestao(idExcluir).then((response) => {
+      setOpen(false);
+      setIsAlterado(!isAlterado);
+    });
   }
 
   return (
 
     <Box className='ibox-content centralized br-40' sx={{ width: '80%', height: '80%' }}>
       <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignItems: 'center' }}>
-        <h2 style={{ color: '#000000' }}>Perguntas
+        <h2 style={{ color: '#000000' }}>Questões
         </h2>
         <Button
           align='right'
@@ -153,22 +173,16 @@ export default function Perguntas() {
           variant="outlined"
           color='nightRide' >
           <AddIcon />
-          Nova pergunta
+          Nova Questão
         </Button>
         <div style={{ padding: '11px' }}>
 
-          <Modal onSubmit={formik.handleSubmit} isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Perguntas'} isCadastro={true} sx={{
+          <Modal onSubmit={formik.handleSubmit} isOpen={openModal} setOpen={setOpenModal} title={'Cadastrar Questão'} isCadastro={true} sx={{
             display: 'flex',
             flexWrap: 'wrap',
             gap: '8px',
             justifyContent: 'center',
           }}>
-
-            {/* <TextField
-                  color='nightRide'
-                  sx={{ width: '50%' }}
-                  label='Eixo'
-                /> */}
             <FormControl sx={{ width: '35%' }}>
               <InputLabel id="demo-simple-select-label"> Tipo </InputLabel>
               <Select
@@ -180,8 +194,8 @@ export default function Perguntas() {
                 value={formik.values.tipo}
                 onChange={formik.handleChange}
               >
-                <MenuItem value={1}>Descritiva</MenuItem>
-                <MenuItem value={2}>Lickert</MenuItem>
+                <MenuItem value={'DISSERTATIVA'}>Descritiva</MenuItem>
+                <MenuItem value={'LIKERT'}>Lickert</MenuItem>
               </Select>
             </FormControl>
 
@@ -191,7 +205,7 @@ export default function Perguntas() {
                 labelId="demo-simple-select-label"
                 color='nightRide'
                 sx={{ color: "#000000" }}
-                id="select"
+                id="eixoId"
                 label="Eixo"
                 name="eixoId"
                 value={formik.values.eixoId}
@@ -217,7 +231,7 @@ export default function Perguntas() {
           </Modal>
         </div>
         <div>
-          < Dialog
+        < Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
@@ -234,16 +248,16 @@ export default function Perguntas() {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}> Não </Button>
-              <Button onClick={handleClose} autoFocus>
+              <Button onClick={() => handleDelete()} autoFocus>
                 Sim
               </Button>
             </DialogActions>
           </Dialog >
         </div>
-        <div style={{ height: '80%', width: '90%' }}>
+        <div style={{ height: '80%', width: '100%' }}>
           <DataGrid sx={{ borderRadius: '25px' }}
             slots={{ toolbar: GridToolbar }}
-            rows={rows}
+            rows={questoes}
             columns={columns}
             initialState={{
               pagination: {
