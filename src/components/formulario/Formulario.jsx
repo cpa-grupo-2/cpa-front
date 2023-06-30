@@ -68,7 +68,7 @@ const Formulario = () => {
     return (
         <div className='box'>
             <form onSubmit={formik.handleSubmit} className='formulario-padrao'>
-                <div className='ibox-content centralized' sFtyle={{ width: '1000px', height: '500px', borderRadius: '40px', }}>
+                <div className='ibox-content centralized' style={{ width: '1000px', height: '500px', borderRadius: '40px', }}>
                     <div className='divider-title' style={{ width: '1033px', }}>
                         <h2 style={{ color: '#000000' }}> Cadastrar Membro CPA</h2>
                     </div>
