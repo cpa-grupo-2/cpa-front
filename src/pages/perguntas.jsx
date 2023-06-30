@@ -17,31 +17,60 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormControl, InputLabel } from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import perguntasService from 'services/PerguntasService';
+// import eixosService from 'services/EixosService';
 
 export default function Perguntas() {
   const [open, setOpen] = React.useState(false);
 
   const [openModal, setOpenModal] = React.useState(false);
 
+  const schema = Yup.object().shape({
+    pergunta: Yup.string().required('Perguntas é obrigatório'),
+    descricao: Yup.string().required('Descrição é obrigatório')
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      id: '',
+      pergunta: '',
+      descricao: ''
+    },
+
+    validationSchema: schema,
+    onSubmit: async values => {
+      try {
+        if (values.id !== '' && values.id !== undefined)
+          perguntasService.editarPergunta(values.id, values.nomeEixo, values.descricao).then(() => {
+            values.id = ''
+            values.pergunta = ''
+            values.descricao = ''
+          })
+        else
+          perguntasService.cadastroPergunta(values.nomeEixo, values.descricao).then(() => {
+            values.nomeEixo = ''
+            values.descricao = ''
+          })
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
   const columns = [
     {
-      field: 'id',
-      headerName: 'ID',
-      // headerAlign: 'center',
-    },
-    {
-      field: 'firstName',
-      headerName: 'Eixo',
-      // headerAlign: 'center',
+      field: 'perguntas',
+      headerName: 'Perguntas',
+      type: 'string',
       flex: 0.5,
-      editable: true,
     },
     {
-      field: 'lastName',
+      field: 'descricao',
       headerName: 'Descrição',
-      // headerAlign: 'center',
+      type: 'string',
       flex: 1,
-      editable: true,
     },
     {
       field: 'actions',
@@ -61,32 +90,11 @@ export default function Perguntas() {
     },
   ];
 
-  const rowsCopia = [
-    { label: 'teste1', age: 42 },
-    { label: 'Teste2', age: 32 },
-    { label: 'Teste3', age: 12 },
-  ];
+  const eixos = () => {
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    { id: 11, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 12, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 13, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 14, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 15, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 16, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 17, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 18, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 19, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
+  }
+
+  const rows = [];
 
   const handleEdit = (id) => {
     setOpenModal(true)
@@ -140,7 +148,7 @@ export default function Perguntas() {
                   sx={{ width: '50%' }}
                   label='Eixo'
                 /> */}
-            <FormControl sx={{width: '35%'}}>
+            <FormControl sx={{ width: '35%' }}>
               <InputLabel id="demo-simple-select-label"> Tipo </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -157,14 +165,14 @@ export default function Perguntas() {
               </Select>
             </FormControl>
 
-            <FormControl sx={{width: '35%'}}>
+            <FormControl sx={{ width: '35%' }}>
               <InputLabel id="demo-simple-select-label"> Eixo </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 color='nightRide'
                 sx={{ color: "#000000" }}
-                id="tdp select"
-                // value={age}
+                id="select"
+                //value={age}
                 label="Eixo"
               // onChange={handleChange}
               >
@@ -207,7 +215,7 @@ export default function Perguntas() {
             </DialogActions>
           </Dialog >
         </div>
-        <div style={{ height: '80%', width: '90%'}}>
+        <div style={{ height: '80%', width: '90%' }}>
           <DataGrid sx={{ borderRadius: '25px' }}
             slots={{ toolbar: GridToolbar }}
             rows={rows}
@@ -220,8 +228,6 @@ export default function Perguntas() {
               },
             }}
             pageSizeOptions={[9]}
-            checkboxSelection
-            disableRowSelectionOnClick
           />
         </div>
       </div>
